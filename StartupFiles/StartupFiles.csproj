@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Interfaces\IStartupFilesExtractor.cs" />
+    <Compile Include="Models\RegistryStartupFilesExtractor.cs" />
     <Compile Include="Models\StartupFileModel.cs" />
     <Compile Include="Models\StartupType.cs" />
     <Compile Include="Models\WinApiImports.cs" />
