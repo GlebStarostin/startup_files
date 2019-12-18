@@ -4,9 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StartupFiles"
+        xmlns:converters="clr-namespace:StartupFiles.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        >
+    <Window.Resources>
+        <converters:IconToImageSourceConverter x:Key="IconToImageSourceConverter" />
+        <converters:StartupTypeToStringConverter x:Key="StartupTypeToStringConverter" />
+    </Window.Resources>
+    
     <Grid>
-        
+        <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <Image Source="{Binding Icon, Mode=OneWay, Converter={StaticResource IconToImageSourceConverter}}"
+                                        Stretch="Fill" Height="32" Width="32" />
+                                    <TextBox Text="{Binding FileName, Mode=TwoWay}" />
+                                    <TextBox Text="{Binding Arguments, Mode=TwoWay}" />
+                                    <TextBox Text="{Binding FileDirectory, Mode=TwoWay}" />
+                                    <TextBox Text="{Binding StartupType, Mode=OneWay, Converter={StaticResource StartupTypeToStringConverter}}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Window>

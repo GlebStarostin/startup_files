@@ -58,15 +58,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\IconToImageSourceConverter.cs" />
+    <Compile Include="Converters\StartupTypeToStringConverter.cs" />
     <Compile Include="Models\Interfaces\IStartupFilesExtractor.cs" />
     <Compile Include="Models\Utils\ArgumentsParser.cs" />
     <Compile Include="Models\Utils\ShortcutUtils.cs" />
     <Compile Include="Models\StartMenuStartupFilesExtractor.cs" />
     <Compile Include="Models\RegistryStartupFilesExtractor.cs" />
     <Compile Include="Models\StartupFileModel.cs" />
+    <Compile Include="Models\StartupFilesModel.cs" />
     <Compile Include="Models\StartupType.cs" />
-    <Compile Include="StartupFileViewModel.cs" />
     <Compile Include="Models\Utils\IconUtils.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
