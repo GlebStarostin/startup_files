@@ -1,16 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using StartupFiles.Models;
 
 namespace StartupFiles
 {
-    internal class MainViewModel
+    internal class MainViewModel : INotifyPropertyChanged
     {
 
-        public StartupFilesModel StartupFiles { get; set; } = new StartupFilesModel();
+        public MainViewModel()
+        {
+            FillStartupFilesCommand = new Command(execute: param =>
+            {
+                Task.Run(() =>
+                {
+                    StartupFiles = new StartupFilesModel();
+                });
+            });
+        }
+
+        public ICommand FillStartupFilesCommand { get; }
+
+        private StartupFilesModel _startupFiles;
+        public StartupFilesModel StartupFiles
+        {
+            get { return _startupFiles; }
+            set
+            {
+                _startupFiles = value;
+                OnPropertyChanged(nameof(MainViewModel.StartupFiles));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }

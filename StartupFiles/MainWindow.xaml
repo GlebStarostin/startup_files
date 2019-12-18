@@ -13,7 +13,10 @@
         <converters:StartupTypeToStringConverter x:Key="StartupTypeToStringConverter" />
     </Window.Resources>
     
-    <Grid>
+    <StackPanel>
+        <Button Command="{Binding FillStartupFilesCommand, Mode=OneWay}"
+                Content="Get startup files"
+                />
         <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
@@ -50,5 +53,5 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-    </Grid>
+    </StackPanel>
 </Window>

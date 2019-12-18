@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\IconToImageSourceConverter.cs" />
     <Compile Include="Converters\StartupTypeToStringConverter.cs" />
+    <Compile Include="Models\Command.cs" />
     <Compile Include="Models\Interfaces\IStartupFilesExtractor.cs" />
     <Compile Include="Models\Utils\ArgumentsParser.cs" />
     <Compile Include="Models\Utils\ShortcutUtils.cs" />
