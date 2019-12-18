@@ -4,6 +4,6 @@ namespace StartupFiles.Models.Interfaces
 {
     internal interface IStartupFilesExtractor
     {
-        IEnumerable<string> GetStartupFileNames();
+        IEnumerable<StartupFileModel> GetStartupFiles();
     }
 }

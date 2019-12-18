@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using Microsoft.Win32;
 using StartupFiles.Models.Interfaces;
+using StartupFiles.Models.Utils;
 
 namespace StartupFiles.Models
 {
@@ -20,29 +23,42 @@ namespace StartupFiles.Models
             @"Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit",
         };
 
-        public IEnumerable<string> GetStartupFileNames()
+        public IEnumerable<StartupFileModel> GetStartupFiles()
         {
             var result = GetValuesFromBaseLevel(Registry.LocalMachine);
             result.AddRange(GetValuesFromBaseLevel(Registry.CurrentUser));
             return result;
         }
 
-        private List<string> GetValuesFromBaseLevel(RegistryKey baseLevelKey)
+        private List<StartupFileModel> GetValuesFromBaseLevel(RegistryKey baseLevelKey)
         {
-            var result = new List<string>();
+            var result = new List<StartupFileModel>();
             foreach (var registryStartupFilesSubKeyName in RegistryStartupFilesSubKeysNames)
             {
                 using (var registryStartupFilesSubKey = baseLevelKey.OpenSubKey(registryStartupFilesSubKeyName, writable: false))
                 {
                     if (registryStartupFilesSubKey == null)
                         continue;
+
                     var valueNames = registryStartupFilesSubKey.GetValueNames();
                     foreach (var valueName in valueNames)
                     {
                         var value = registryStartupFilesSubKey.GetValue(valueName, null);
                         if (value == null)
                             continue;
-                        result.Add(value.ToString());
+
+                        var fileInfo = ArgumentsParser.SplitArgumentsAndFileName(value.ToString());
+                        if (string.IsNullOrWhiteSpace(fileInfo?.FileName))
+                            continue;
+
+                        result.Add(new StartupFileModel
+                        {
+                            FileDirectory = Path.GetDirectoryName(fileInfo.FileName),
+                            FileName = Path.GetFileName(fileInfo.FileName),
+                            Arguments = fileInfo.Arguments,
+                            Icon = Icon.ExtractAssociatedIcon(fileInfo.FileName),
+                            StartupType = StartupType.Registry,
+                        });
                     }
                 }
             }

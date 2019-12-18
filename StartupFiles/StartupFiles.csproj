@@ -59,6 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Interfaces\IStartupFilesExtractor.cs" />
+    <Compile Include="Models\Utils\ArgumentsParser.cs" />
+    <Compile Include="Models\Utils\ShortcutUtils.cs" />
+    <Compile Include="Models\StartMenuStartupFilesExtractor.cs" />
     <Compile Include="Models\RegistryStartupFilesExtractor.cs" />
     <Compile Include="Models\StartupFileModel.cs" />
     <Compile Include="Models\StartupType.cs" />
