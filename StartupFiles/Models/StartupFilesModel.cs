@@ -10,13 +10,19 @@ namespace StartupFiles.Models
     internal class StartupFilesModel
     {
 
-        private static readonly RegistryStartupFilesExtractor RegistryStartupFilesExtractor = new RegistryStartupFilesExtractor();
-        private static readonly StartMenuStartupFilesExtractor StartMenuStartupFilesExtractor = new StartMenuStartupFilesExtractor();
+        private static readonly IStartupFilesExtractor[] StartupFilesExtractors =
+        {
+            new RegistryStartupFilesExtractor(),
+            new StartMenuStartupFilesExtractor(),
+        };
 
         public StartupFilesModel()
         {
-            StartupFileModels.AddRange(RegistryStartupFilesExtractor.GetStartupFiles());
-            StartupFileModels.AddRange(StartMenuStartupFilesExtractor.GetStartupFiles());
+            StartupFileModels.Clear();
+            foreach (var startupFilesExtractor in StartupFilesExtractors)
+            {
+                StartupFileModels.AddRange(startupFilesExtractor.GetStartupFiles());
+            }
         }
 
         public List<StartupFileModel> StartupFileModels { get; } = new List<StartupFileModel>();
