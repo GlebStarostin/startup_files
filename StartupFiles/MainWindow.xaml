@@ -12,48 +12,50 @@
         <converters:IconToImageSourceConverter x:Key="IconToImageSourceConverter" />
         <converters:StartupTypeToStringConverter x:Key="StartupTypeToStringConverter" />
     </Window.Resources>
-    
-    <StackPanel>
-        <Button Command="{Binding FillStartupFilesCommand, Mode=OneWay}"
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Button Command="{Binding FillStartupFilesCommand, Mode=OneWay}"
                 Content="Get startup files"
                 />
-        <Label Content="Startup files obtained:" />
-        <Label Content="{Binding StartupFilesCount, Mode=OneWay}" />
-        <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Margin" Value="5" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
-                                    </Grid.RowDefinitions>
-                                    <Image Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Source="{Binding Icon, Mode=OneWay, Converter={StaticResource IconToImageSourceConverter}}"
+            <Label Content="Startup files obtained:" />
+            <Label Content="{Binding StartupFilesCount, Mode=OneWay}" />
+            <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Source="{Binding Icon, Mode=OneWay, Converter={StaticResource IconToImageSourceConverter}}"
                                         Stretch="Fill" Height="32" Width="32" />
-                                    <Label Grid.Column="0" Grid.Row="1" Content="File location" />
-                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding FileDirectory, Mode=TwoWay}" />
-                                    <Label Grid.Column="0" Grid.Row="2" Content="File name" />
-                                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding FileName, Mode=TwoWay}" />
-                                    <Label Grid.Column="0" Grid.Row="3" Content="Arguments" />
-                                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Arguments, Mode=TwoWay}" />
-                                    <Label Grid.Column="0" Grid.Row="4" Content="Source" />
-                                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding StartupType, Mode=OneWay, Converter={StaticResource StartupTypeToStringConverter}}" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
-    </StackPanel>
+                                        <Label Grid.Column="0" Grid.Row="1" Content="File location" />
+                                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding FileDirectory, Mode=TwoWay}" />
+                                        <Label Grid.Column="0" Grid.Row="2" Content="File name" />
+                                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding FileName, Mode=TwoWay}" />
+                                        <Label Grid.Column="0" Grid.Row="3" Content="Arguments" />
+                                        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Arguments, Mode=TwoWay}" />
+                                        <Label Grid.Column="0" Grid.Row="4" Content="Source" />
+                                        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding StartupType, Mode=OneWay, Converter={StaticResource StartupTypeToStringConverter}}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
