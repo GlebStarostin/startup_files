@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using StartupFiles.Models;
 
@@ -10,13 +9,8 @@ namespace StartupFiles
 
         public MainViewModel()
         {
-            FillStartupFilesCommand = new Command(execute: param =>
-            {
-                Task.Run(() =>
-                {
-                    StartupFiles = new StartupFilesModel();
-                });
-            });
+            FillStartupFilesCommand = new TaskRunCommand(
+                execute: param => StartupFiles = new StartupFilesModel());
         }
 
         public ICommand FillStartupFilesCommand { get; }
