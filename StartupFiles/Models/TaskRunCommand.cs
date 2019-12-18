@@ -45,14 +45,14 @@ namespace StartupFiles.Models
             Task.Run(() =>
             {
                 _execute?.Invoke(parameter);
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            })
+            .ContinueWith(task =>
+            {
+                lock (_executeCheckLock)
                 {
-                    lock (_executeCheckLock)
-                    {
-                        IsExecuting = false;
-                    }
-                });
-            });
+                    IsExecuting = false;
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void RaiseCanExecuteChanged()
