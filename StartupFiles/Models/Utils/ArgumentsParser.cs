@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace StartupFiles.Models.Utils
+﻿namespace StartupFiles.Models.Utils
 {
     internal static class ArgumentsParser
     {
@@ -14,23 +11,30 @@ namespace StartupFiles.Models.Utils
 
         public static ParsedResult SplitArgumentsAndFileName(string fileNameToParse)
         {
-            var fileName = fileNameToParse;
+            var fileName = fileNameToParse.Trim();
             var arguments = string.Empty;
 
-            var foldersAndFileName = fileNameToParse.Split(new[] {@"\"}, StringSplitOptions.RemoveEmptyEntries);
-            var localFileNameAndArguments = foldersAndFileName.Last();
-            var possibleArguments = localFileNameAndArguments.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (possibleArguments.Length > 1)
+            if (fileName.StartsWith(@""""))
             {
-                var argumentsArray = possibleArguments.Skip(1).ToArray();
-                arguments = argumentsArray.Skip(1)
-                    .Aggregate(seed: argumentsArray.First(), func: (seed, argument) => $"{seed} {argument}");
-                fileName = foldersAndFileName.Skip(1).Take(foldersAndFileName.Length - 2)
-                    .Aggregate(seed: foldersAndFileName.First(), func: (seed, argument) => $@"{seed}\{argument}",
-                    resultSelector: aggregatedArguments => $@"{aggregatedArguments}\{possibleArguments.First()}")
-                    .Trim('"');
+                int pos = fileName.IndexOf('"', 1);
+
+                if (pos > 0 && fileName.Length > pos + 1)
+                {
+                    fileName = fileName.Substring(0, pos + 1).Trim();
+                    arguments = fileName.Substring(pos + 1).Trim();
+                }
             }
+            else
+            {
+                var pos = fileName.IndexOf(" ");
+                if (pos > 0 && fileName.Length > pos + 1)
+                {
+                    fileName = fileName.Substring(0, pos + 1).Trim();
+                    arguments = fileName.Substring(pos + 1).Trim();
+                }
+            }
+
+            fileName = fileName.Trim('"');
 
             return new ParsedResult {FileName = fileName, Arguments = arguments };
         }
