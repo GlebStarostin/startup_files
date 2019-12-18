@@ -1,4 +1,7 @@
-﻿namespace StartupFiles.Models.Utils
+﻿using System.IO;
+using System.Linq;
+
+namespace StartupFiles.Models.Utils
 {
     internal static class ArgumentsParser
     {
@@ -26,11 +29,15 @@
             }
             else
             {
-                var pos = fileName.IndexOf(" ");
-                if (pos > 0 && fileName.Length > pos + 1)
+                var pathInvalidChars = Path.GetInvalidPathChars();
+                if(fileName.Any(pathInvalidChars.Contains))
                 {
-                    arguments = fileName.Substring(pos + 1).Trim();
-                    fileName = fileName.Substring(0, pos + 1).Trim();
+                    var pos = fileName.Where(pathInvalidChars.Contains).Select(x => fileName.IndexOf(x)).Min();
+                    if (pos > 0 && fileName.Length > pos + 1)
+                    {
+                        arguments = fileName.Substring(pos + 1).Trim();
+                        fileName = fileName.Substring(0, pos + 1).Trim();
+                    }
                 }
             }
 
