@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace StartupFiles.Models
+namespace StartupFiles.Models.Utils
 {
-    internal static class WinApiImports
+    internal static class IconUtils
     {
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]

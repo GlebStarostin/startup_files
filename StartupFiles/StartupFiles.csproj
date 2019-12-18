@@ -65,8 +65,8 @@
     <Compile Include="Models\RegistryStartupFilesExtractor.cs" />
     <Compile Include="Models\StartupFileModel.cs" />
     <Compile Include="Models\StartupType.cs" />
-    <Compile Include="Models\WinApiImports.cs" />
     <Compile Include="StartupFileViewModel.cs" />
+    <Compile Include="Models\Utils\IconUtils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
