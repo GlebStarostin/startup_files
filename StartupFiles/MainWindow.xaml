@@ -20,6 +20,7 @@
                 />
             <Label Content="Startup files obtained:" />
             <Label Content="{Binding StartupFilesCount, Mode=OneWay}" />
+            <ProgressBar Height="20" IsIndeterminate="{Binding IsStartupFilesLoading, Mode=OneWay}" />
             <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">

@@ -16,12 +16,12 @@ namespace StartupFiles.Models
             new StartMenuStartupFilesExtractor(),
         };
 
-        public StartupFilesModel()
+        public StartupFilesModel(IProgress<int> progressReporter = null)
         {
             StartupFileModels.Clear();
             foreach (var startupFilesExtractor in StartupFilesExtractors)
             {
-                StartupFileModels.AddRange(startupFilesExtractor.GetStartupFiles());
+                StartupFileModels.AddRange(startupFilesExtractor.GetStartupFiles(progressReporter));
             }
         }
 

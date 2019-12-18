@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Microsoft.Win32;
@@ -23,14 +24,14 @@ namespace StartupFiles.Models
             @"Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit",
         };
 
-        public IEnumerable<StartupFileModel> GetStartupFiles()
+        public IEnumerable<StartupFileModel> GetStartupFiles(IProgress<int> progressReporter = null)
         {
-            var result = GetValuesFromBaseLevel(Registry.LocalMachine);
-            result.AddRange(GetValuesFromBaseLevel(Registry.CurrentUser));
+            var result = GetValuesFromBaseLevel(Registry.LocalMachine, progressReporter);
+            result.AddRange(GetValuesFromBaseLevel(Registry.CurrentUser, progressReporter));
             return result;
         }
 
-        private List<StartupFileModel> GetValuesFromBaseLevel(RegistryKey baseLevelKey)
+        private List<StartupFileModel> GetValuesFromBaseLevel(RegistryKey baseLevelKey, IProgress<int> progressReporter = null)
         {
             var result = new List<StartupFileModel>();
             foreach (var registryStartupFilesSubKeyName in RegistryStartupFilesSubKeysNames)
@@ -59,6 +60,7 @@ namespace StartupFiles.Models
                             Icon = Icon.ExtractAssociatedIcon(fileInfo.FileName),
                             StartupType = StartupType.Registry,
                         });
+                        progressReporter?.Report(1);
                     }
                 }
             }

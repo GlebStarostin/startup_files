@@ -15,7 +15,7 @@ namespace StartupFiles.Models
             Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup),
         };
 
-        public IEnumerable<StartupFileModel> GetStartupFiles()
+        public IEnumerable<StartupFileModel> GetStartupFiles(IProgress<int> progressReporter = null)
         {
             var result = new List<StartupFileModel>();
             foreach (var startMenuStartupFolder in StartMenuStartupFolders)
@@ -28,9 +28,11 @@ namespace StartupFiles.Models
                     {
                         case ".exe":
                             result.Add(GetModelFromExecutable(fileName));
+                            progressReporter?.Report(1);
                             break;
                         case ".lnk":
                             result.Add(GetModelFromShortcut(fileName));
+                            progressReporter?.Report(1);
                             break;
                         case ".ini":
                             break;

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using StartupFiles.Models;
 
@@ -10,7 +11,39 @@ namespace StartupFiles
         public MainViewModel()
         {
             FillStartupFilesCommand = new TaskRunCommand(
-                execute: param => StartupFiles = new StartupFilesModel());
+                execute: param =>
+                {
+                    IsStartupFilesLoading = true;
+
+                    StartupFilesCount = 0;
+                    var progressReporter = new Progress<int>(
+                        startupFilesAdded => StartupFilesCount += startupFilesAdded);
+                    StartupFiles = new StartupFilesModel(progressReporter);
+
+                    IsStartupFilesLoading = false;
+                });
+        }
+
+        private bool _isStartupFilesLoading;
+        public bool IsStartupFilesLoading
+        {
+            get { return _isStartupFilesLoading; }
+            set
+            {
+                _isStartupFilesLoading = value;
+                OnPropertyChanged(nameof(MainViewModel.IsStartupFilesLoading));
+            }
+        }
+
+        private volatile int _startupFilesCount;
+        public int StartupFilesCount
+        {
+            get { return _startupFilesCount; }
+            set
+            {
+                _startupFilesCount = value;
+                OnPropertyChanged(nameof(MainViewModel.StartupFilesCount));
+            }
         }
 
         public ICommand FillStartupFilesCommand { get; }
@@ -23,11 +56,8 @@ namespace StartupFiles
             {
                 _startupFiles = value;
                 OnPropertyChanged(nameof(MainViewModel.StartupFiles));
-                OnPropertyChanged(nameof(MainViewModel.StartupFilesCount));
             }
         }
-
-        public int StartupFilesCount => StartupFiles?.StartupFileModels?.Count ?? 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
