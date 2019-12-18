@@ -173,7 +173,7 @@ namespace StartupFiles.Models.Utils
             var data = new WIN32_FIND_DATAW();
             ((IShellLinkW)link).GetPath(filePathStringBuilder, filePathStringBuilder.Capacity, out data, 0);
 
-            StringBuilder argumentsStringBuilder = new StringBuilder();
+            StringBuilder argumentsStringBuilder = new StringBuilder(MAX_PATH);
             ((IShellLinkW)link).GetArguments(argumentsStringBuilder, MAX_PATH);
 
             return new ShortcutInfo

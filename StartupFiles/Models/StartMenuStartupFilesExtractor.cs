@@ -26,11 +26,13 @@ namespace StartupFiles.Models
                     var fileInfo = new FileInfo(fileName);
                     switch (fileInfo.Extension)
                     {
-                        case "exe":
+                        case ".exe":
                             result.Add(GetModelFromExecutable(fileName));
                             break;
-                        case "lnk":
+                        case ".lnk":
                             result.Add(GetModelFromShortcut(fileName));
+                            break;
+                        case ".ini":
                             break;
                         default:
                             throw new NotImplementedException();
