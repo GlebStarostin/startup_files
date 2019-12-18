@@ -29,8 +29,11 @@ namespace StartupFiles
             {
                 _startupFiles = value;
                 OnPropertyChanged(nameof(MainViewModel.StartupFiles));
+                OnPropertyChanged(nameof(MainViewModel.StartupFilesCount));
             }
         }
+
+        public int StartupFilesCount => StartupFiles?.StartupFileModels?.Count ?? 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

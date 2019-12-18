@@ -17,6 +17,8 @@
         <Button Command="{Binding FillStartupFilesCommand, Mode=OneWay}"
                 Content="Get startup files"
                 />
+        <Label Content="Startup files obtained:" />
+        <Label Content="{Binding StartupFilesCount, Mode=OneWay}" />
         <ListView ItemsSource="{Binding StartupFileModels, Mode=OneWay}" DataContext="{Binding StartupFiles, Mode=OneWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
